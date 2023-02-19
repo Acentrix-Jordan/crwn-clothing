@@ -30,7 +30,7 @@ const SignUpForm = () => {
 		event.preventDefault();
 
 		// If passwords don't match return
-		if (password != confirmPassword) {
+		if (password !== confirmPassword) {
 			alert("Passwords must match");
 			return;
 		}
@@ -47,7 +47,7 @@ const SignUpForm = () => {
 
 			resetFormFields();
 		} catch (error) {
-			if (error.code == "auth/email-already-in-use") {
+			if (error.code === "auth/email-already-in-use") {
 				alert("Sorry, that email is already in use");
 			} else {
 				alert(error);

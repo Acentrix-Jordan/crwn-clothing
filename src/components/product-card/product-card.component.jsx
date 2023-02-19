@@ -15,7 +15,7 @@ const ProductCard = ({ product }) => {
 		<ProductCardContainer>
 			<img
 				src={imageUrl}
-				alt={`Picture of ${name}`}
+				alt={`${name}`}
 			/>
 			<ProductCardFooter>
 				<span className="name">{name}</span>

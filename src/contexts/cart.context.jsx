@@ -26,9 +26,9 @@ const removeCartItem = (cartItems, cartItemToRemove) => {
 	});
 
 	// if Quantity = 1 remove
-	if (exisitingCartItem.quantity == 1) {
+	if (exisitingCartItem.quantity === 1) {
 		return cartItems.filter(
-			(cartItem) => cartItem.id != cartItemToRemove.id
+			(cartItem) => cartItem.id !== cartItemToRemove.id
 		);
 	}
 	// return cartItems with matching cart items with reduced quantity
@@ -41,7 +41,7 @@ const removeCartItem = (cartItems, cartItemToRemove) => {
 };
 
 const clearCartItem = (cartItems, cartItemToClear) => {
-	return cartItems.filter((cartItem) => cartItem.id != cartItemToClear.id);
+	return cartItems.filter((cartItem) => cartItem.id !== cartItemToClear.id);
 };
 
 export const CartContext = createContext({
