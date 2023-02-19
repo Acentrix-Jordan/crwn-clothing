@@ -1,0 +1,34 @@
+# Redux
+
+User context is one way to manage state.
+
+Redux is an external library used for state management.
+
+To understand redux we need to understand Reducers.
+
+## Reducers
+
+Example:
+
+```
+cartReducer
+{
+    cartItems: [],
+    cartCount: 0,
+    cartTotal: 0,
+    isCartOpen: false,
+}
+```
+
+We can use actions to alter our reducer items values
+
+```
+Action
+{
+    type: "TOGGLE_CART_IS_OPEN"
+}
+{
+    type: "ADD_ITEM_TO_CART"
+    payload: {}
+}
+```
