@@ -1,34 +1,134 @@
 # Redux
 
-User context is one way to manage state.
+React context is one way to manage state.
 
 Redux is an external library used for state management.
 
 To understand redux we need to understand Reducers.
 
-## Reducers
+It has become common practice to utilise Redux Toolkit in development to improve DX however, because the toolkit abstracts some features, you won't be able to fully understand what is going on in Redux has it has a steep learning curve.
 
-Example:
+First we need to learn Redux before we move onto Redux Toolkit
+
+## Context API vs Redux
+
+2 Main differences
+
+-   Accessibility of the data
+-   Flow of Data
+
+### Accessibility
+
+With context we can restrict accessability by wrapping our components with our required provider.
+
+However with Redux, we wrap our whole application in a 'store'.
+
+Redux is a global state management tool
+
+### Flow of Data
+
+Contexts have 2 parts:
+
+1. UI Components
+2. Contexts with Reducers
+
+Components drive actions into the reducers, then the reducers provide new values to the components
 
 ```
-cartReducer
-{
-    cartItems: [],
-    cartCount: 0,
-    cartTotal: 0,
-    isCartOpen: false,
-}
+Component 1 --->--Action--->---|
+    |                          |
+    | --<-------Values----<---Reducer
+    |                          |
+Component 2 --->---Action-->---|
 ```
 
-We can use actions to alter our reducer items values
+Redux has 2 parts:
+
+1. UI Components
+2. Redux Store
+
+Our Redux store contains reducers which combine into a root reducer
+
+The reducer will then pass the state to the UI Components
 
 ```
-Action
-{
-    type: "TOGGLE_CART_IS_OPEN"
-}
-{
-    type: "ADD_ITEM_TO_CART"
-    payload: {}
-}
+    ------->------->------>------ Dispatch Action ->------------>----------
+    |              |            |                  |            |         |
+    |              |            |                Update      Update    Update
+    |              |            |                  |            |         |
+Component 1   Component 2   Component 3        Reducer A   Reducer B  Reducer C
+    |              |            |                   |           |         |
+    |              |            |                   |           |         |
+    |              |            |                   ------ Root Reducer -----
+    |              |            |                               |
+    ---------<------------<----------<--- Pass State -------<----
 ```
+
+## Redux Intragration
+
+Redux requires 3 packages
+
+1. Redux Library
+2. React Redux
+3. Redux Logger - Used for visual representation
+
+```
+npm i redux react-redux redux-logger
+```
+
+It is best practice to not mix Context and Redux together
+
+## Boilerplate Setup
+
+1. Create Store folder in src
+2. Create store.js
+
+### Store.js
+
+1. We need to import 3 different methods from core redux
+
+```
+import { compose, createStore, applyMiddleware } from "redux";
+```
+
+2. Import logger (if applicable)
+
+```
+import logger from 'redux-logger'
+```
+
+3. Create our root-reducer.js file inside our store file
+
+### Root Reducer
+
+1. Import combine reducers from redux core
+
+```
+import { combineReducers } from "redux";
+```
+
+2. Initialise our root reducer
+
+```
+export const rootReducer = combineReducers({})
+```
+
+### Middleware
+
+Back in our store.js file we are going to use the applyMiddleware method.
+
+Middleware are little library helpers that run before an action hits the reducer.
+
+dispatch reducer --> middleware --> store.
+
+We will use our applyMiddleware method, to implement our logger package
+
+```
+const middleWares = [logger];
+
+const composedEnhancers = compose(applyMiddleware(...middleWares));
+
+export const store = createStore(rootReducer, undefined, composedEnhancers);
+```
+
+### Access our store in the application
